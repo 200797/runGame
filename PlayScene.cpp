@@ -14,6 +14,10 @@ GameTimer PlayScene::timer;
 /*
 * 4/19、最終系のイメージ全くないから適当に色々増設
 * もじもじくんはもはやランゲームじゃないのでなし
+* 床の生成は間違いなくもっといい書き方あると思う,(現在単純にfactoryを使用)
+* 何だか全体的にクラス名が悪い気がしてきた、取り合えずmanager共は考え直した方がいい
+* いじるなら普通にインターフェースかなぁ？
+* スクロールスピード周りでどう共通化するのがいいか分からない
 */
 
 PlayScene::PlayScene(GameObject* parent)
@@ -89,7 +93,7 @@ void PlayScene::SpawnFloor()
 	std::shuffle(seedTable.begin(), seedTable.end(), gen);
 	for (int x = 0; x < seedTable.size(); x++)
 	{
-		int objectType = 0; // objectTypeの0が床なんで
+		int objectType = 0; // まだ他の用意ができないから一旦0
 		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x]);
 	}
 }
@@ -100,15 +104,21 @@ void PlayScene::SpawnObstacle()
 	std::shuffle(seedTable.begin(), seedTable.end(), gen);
 	for (int x = 0; x < seedTable.size() - 1; x++)
 	{
-		int objectType = RandomObjectType() + 1; // objectTypeの0が床なんで
+		int objectType = RandomObjectType();
 		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x]);
 	}
+}
+
+void PlayScene::SpawnItem()
+{
+	std::shuffle(seedTable.begin(), seedTable.end(), gen);
+
 }
 
 int PlayScene::RandomObjectType()
 {
 	int typeCount = static_cast<int>(ObstacleTypes::Count);
-	std::uniform_int_distribution<int> dist(1, typeCount - 1);// objectTypeの0が床なんで0は出さない
+	std::uniform_int_distribution<int> dist(0, typeCount - 1);
 	int type = dist(gen);
 	return 0;
 }

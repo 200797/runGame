@@ -24,6 +24,12 @@
       <UniqueIdentifier>{47a6a3f5-8cfd-436b-8d58-beccd108f3f3}</UniqueIdentifier>
       <Extensions>hlsl</Extensions>
     </Filter>
+    <Filter Include="リソース ファイル\Floor">
+      <UniqueIdentifier>{ab1d3c37-0c64-4ec2-8200-152ae899ab4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Obstacle">
+      <UniqueIdentifier>{88e5e40e-aa1f-42ff-9128-a045bc20c951}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BoxCollider.cpp">
@@ -97,11 +103,21 @@
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="GameTimer.cpp" />
-    <ClCompile Include="ObstacleFactory.cpp" />
+    <ClCompile Include="Normal.cpp">
+      <Filter>リソース ファイル\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorFactory.cpp">
+      <Filter>リソース ファイル\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="ObstacleFactory.cpp">
+      <Filter>リソース ファイル\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>リソース ファイル\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -175,13 +191,28 @@
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Wall.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameObjectObserver.h" />
-    <ClInclude Include="ObstacleTypes.h" />
-    <ClInclude Include="ObstacleFactory.h" />
+    <ClInclude Include="FloorTypes.h">
+      <Filter>リソース ファイル\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="Normal.h">
+      <Filter>リソース ファイル\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorFactory.h">
+      <Filter>リソース ファイル\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleFactory.h">
+      <Filter>リソース ファイル\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleTypes.h">
+      <Filter>リソース ファイル\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>リソース ファイル\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

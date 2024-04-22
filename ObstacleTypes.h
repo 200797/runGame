@@ -2,9 +2,8 @@
 
 enum class ObstacleTypes
 {
-    // Floorを0にしたせいで若干他の改変必要になったから方法変えるかも
-    Floor = 0,
-    Wall,
+    // 暫定、名前は思いついたら変える
+    Wall = 0,
     Count
 };
 

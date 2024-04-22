@@ -22,11 +22,12 @@ public:
 private:
 	void SpawnFloor();
 	void SpawnObstacle();
+	void SpawnItem();
 	int RandomObjectType(); // もう少しマシな名前にしたい
 
 private:
 	// 床追加したから別途でそれ用の作りそう
-	std::array<int, 3> seedTable = {-1, 0, 1}; // 3レーンらしいからとりあえず
+	std::array<int, 3> seedTable = {-1, 0, 1}; // 引数で渡すx座標
 	std::mt19937 gen;
 
 	double lastSpawnTime;		// 
