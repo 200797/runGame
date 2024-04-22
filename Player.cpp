@@ -29,6 +29,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
+    // 3ƒŒ[ƒ“•ªA—¬Î‚É‚à‚¤‚¿‚å‚¢‚¢Œ`‚É‚µ‚½‚¢
     if (Input::IsMouseButtonDown(0) && transform_.position_.x > -1)
     {
         transform_.position_.x -= 1;

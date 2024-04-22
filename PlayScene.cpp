@@ -13,6 +13,7 @@ GameTimer PlayScene::timer;
 
 /*
 * 4/19、最終系のイメージ全くないから適当に色々増設
+* もじもじくんはもはやランゲームじゃないのでなし
 */
 
 PlayScene::PlayScene(GameObject* parent)
@@ -82,21 +83,32 @@ void PlayScene::OnCollision(GameObject* pSelf)
 	}
 }
 
+void PlayScene::SpawnFloor()
+{
+	// 現状障害物とほぼ変わらんけど、一応別途で
+	std::shuffle(seedTable.begin(), seedTable.end(), gen);
+	for (int x = 0; x < seedTable.size(); x++)
+	{
+		int objectType = 0; // objectTypeの0が床なんで
+		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x]);
+	}
+}
+
 void PlayScene::SpawnObstacle()
 {
 	// 3レーンのうちの2レーンに障害物出るようにって言ってた気がする
 	std::shuffle(seedTable.begin(), seedTable.end(), gen);
 	for (int x = 0; x < seedTable.size() - 1; x++)
 	{
-		int objectType = RandomObjectType();
+		int objectType = RandomObjectType() + 1; // objectTypeの0が床なんで
 		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x]);
 	}
 }
 
 int PlayScene::RandomObjectType()
 {
-	int typeCount = static_cast<int>(ObstacleType::Count);
-	std::uniform_int_distribution<int> dist(0, typeCount - 1);
+	int typeCount = static_cast<int>(ObstacleTypes::Count);
+	std::uniform_int_distribution<int> dist(1, typeCount - 1);// objectTypeの0が床なんで0は出さない
 	int type = dist(gen);
 	return 0;
 }

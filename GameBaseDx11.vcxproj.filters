@@ -102,7 +102,6 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="ObstacleFactory.cpp" />
-    <ClCompile Include="Fall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -183,7 +182,6 @@
     <ClInclude Include="GameObjectObserver.h" />
     <ClInclude Include="ObstacleTypes.h" />
     <ClInclude Include="ObstacleFactory.h" />
-    <ClInclude Include="Fall.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

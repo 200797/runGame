@@ -148,7 +148,6 @@
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
-    <ClCompile Include="Fall.cpp" />
     <ClCompile Include="ObstacleFactory.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResultScene.cpp" />
@@ -181,7 +180,6 @@
     <ClInclude Include="Engine\Text.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
-    <ClInclude Include="Fall.h" />
     <ClInclude Include="GameObjectObserver.h" />
     <ClInclude Include="ObstacleFactory.h" />
     <ClInclude Include="Player.h" />

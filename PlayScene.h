@@ -20,10 +20,12 @@ public:
 	void OnCollision(GameObject* pSelf) override;
 
 private:
+	void SpawnFloor();
 	void SpawnObstacle();
 	int RandomObjectType(); // もう少しマシな名前にしたい
 
 private:
+	// 床追加したから別途でそれ用の作りそう
 	std::array<int, 3> seedTable = {-1, 0, 1}; // 3レーンらしいからとりあえず
 	std::mt19937 gen;
 
