@@ -13,8 +13,6 @@ public:
 	void Draw() override;
 	void Release() override;
 
-	void OnCollision(GameObject* pTarget);
-
 private:
 	int hModel_;
 	float scrollSpe_;

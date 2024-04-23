@@ -33,14 +33,37 @@ void Player::Initialize()
 
 void Player::Update()
 {
-    // 3レーン分、瞬間移動になってるからそこは形変えた方がいい
-    if (Input::IsMouseButtonDown(0) && transform_.position_.x > -1)
-    {
-        transform_.position_.x -= 1;
+    PrevPosition_ = transform_.position_;
+
+    // 移動処理
+    if (moving_) {
+        // 目標座標に向かって滑らかに移動する
+        float direction = targetX_ - transform_.position_.x;
+        if (abs(direction) > 0.01f) {
+            direction /= abs(direction);
+            transform_.position_.x += direction * 0.05f; // 移動速度を適切な値に調整する必要があります
+        }
+        else {
+            transform_.position_.x = targetX_;
+            moving_ = false;
+        }
     }
-    if (Input::IsMouseButtonDown(1) && transform_.position_.x < 1)
-    {
-        transform_.position_.x += 1;
+    else {
+        // 中央に移動
+        if (Input::IsKeyDown(DIK_S)) {
+            targetX_ = 0.0f;
+            moving_ = true;
+        }
+        // 右移動でX座標が+1の位置まで移動開始
+        else if (Input::IsKeyDown(DIK_D) && transform_.position_.x < 1) {
+            targetX_ = 1.0f;
+            moving_ = true;
+        }
+        // 左移動でX座標が-1の位置まで移動開始
+        else if (Input::IsKeyDown(DIK_A) && transform_.position_.x > -1) {
+            targetX_ = -1.0f;
+            moving_ = true;
+        }
     }
 
     // 取り合えず簡素なY軸要素
@@ -89,18 +112,9 @@ void Player::OnCollision(GameObject* pTarget)
     if (pTarget->GetObjectName() == "Wall")
     {
         // 演出入れるならここかなぁ
-        if (feedEatCnt >= 4)
-        {
-            pTarget->KillMe();
-            enemyEatCnt++;
-            feedEatCnt = 0;
-        }
-        else
-        {
-            KillMe();
-            pTarget->KillMe();
-            NotifyCollision(this);
-        }
+        KillMe();
+        pTarget->KillMe();
+        NotifyCollision(this);
     }
 
     if (pTarget->GetObjectName() == "Feed")
