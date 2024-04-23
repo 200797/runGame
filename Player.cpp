@@ -6,13 +6,17 @@
 
 
 Player::Player(GameObject* parent)
-    : GameObject(parent, "Player"), hModel_(-1), state_(PlayerState::NEUTRAL)
+    : GameObject(parent, "Player"), hModel_(-1), state_(PlayerState::NEUTRAL), feedEatCnt(0), enemyEatCnt(0)
 {
     PlayScene* playScene = FindObject<PlayScene>("PlayScene");
     if (playScene)
     {
         AttachObserver(playScene);
     }
+}
+
+Player::~Player()
+{
 }
 
 void Player::Initialize()
@@ -29,7 +33,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
-    // 3レーン分、流石にもうちょいい形にしたい
+    // 3レーン分、瞬間移動になってるからそこは形変えた方がいい
     if (Input::IsMouseButtonDown(0) && transform_.position_.x > -1)
     {
         transform_.position_.x -= 1;
@@ -58,7 +62,7 @@ void Player::Update()
         break;
 
     case PlayerState::FALLING:
-            transform_.position_.y -= 0.1f;
+        transform_.position_.y -= 0.1f;
         if (transform_.position_.y <= 0.0f)
         {
             transform_.position_.y = 0.0f;
@@ -81,11 +85,27 @@ void Player::Release()
 
 void Player::OnCollision(GameObject* pTarget)
 {
-    // 種類増えるたびここに条件増えるのアホくさい
-    if (pTarget->GetObjectName() == "Wall" || pTarget->GetObjectName() == "Fall")
+    // ゲームオーバー系の種類増えるたびここに条件増えるのアホくさい
+    if (pTarget->GetObjectName() == "Wall")
     {
-        KillMe();
+        // 演出入れるならここかなぁ
+        if (feedEatCnt >= 4)
+        {
+            pTarget->KillMe();
+            enemyEatCnt++;
+            feedEatCnt = 0;
+        }
+        else
+        {
+            KillMe();
+            pTarget->KillMe();
+            NotifyCollision(this);
+        }
+    }
+
+    if (pTarget->GetObjectName() == "Feed")
+    {
         pTarget->KillMe();
-        NotifyCollision(this);
+        feedEatCnt++;
     }
 }

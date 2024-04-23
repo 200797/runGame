@@ -6,6 +6,7 @@
 #include "Wall.h"
 #include "GameTimer.h"
 #include "ObstacleFactory.h"
+#include "ItemFactory.h"
 #include <thread>
 #include "ObstacleTypes.h"
 
@@ -14,27 +15,25 @@ GameTimer PlayScene::timer;
 /*
 * 4/19、最終系のイメージ全くないから適当に色々増設
 * もじもじくんはもはやランゲームじゃないのでなし
-* 床の生成は間違いなくもっといい書き方あると思う,(現在単純にfactoryを使用)
-* 何だか全体的にクラス名が悪い気がしてきた、取り合えずmanager共は考え直した方がいい
-* いじるなら普通にインターフェースかなぁ？
-* スクロールスピード周りでどう共通化するのがいいか分からない
+* アイテム関係のクラス名は適当につけるので後で直して
+* 流れてくるオブジェクト全般にほぼ共通の処理があるからなんかしてまとめろ
 */
 
 PlayScene::PlayScene(GameObject* parent)
-	: GameObject(parent, "PlayScene"), gen(std::random_device()()), pText(nullptr), lastSpawnTime(0), spawnIntervalSeconds(1)
+	: GameObject(parent, "PlayScene"), pText(nullptr), gen(std::random_device()())
 {
+	lastSpawnTime = 0;
+	spawnIntervalSeconds = 1;
+	scrollSpe = 0.1f;
+
+	GetCoinCnt = 0;
+
 	//タイマー開始
 	timer.Start();
 }
 
 PlayScene::~PlayScene()
 {
-	//タイマー終了
-	timer.Stop();
-
-	//連打で進んじゃうから応急処置,ちゃんとゲームぽく演出入れ
-	std::this_thread::sleep_for(std::chrono::seconds(1));
-
 	SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 	pSceneManager->ChangeScene(SCENE_ID_RESULT, timer.GetElapsedTime());
 }
@@ -62,6 +61,7 @@ void PlayScene::Update()
 	if (currentTime - lastSpawnTime >= spawnIntervalSeconds)
 	{
 		SpawnObstacle();
+		SpawnItem();
 		lastSpawnTime = currentTime;  //最終スポーン時間を更新
 	}
 }
@@ -83,18 +83,14 @@ void PlayScene::OnCollision(GameObject* pSelf)
 
 	if (pSelf->GetObjectName() == "Player")
 	{
-		KillMe();
-	}
-}
+		//タイマー終了
+		timer.Stop();
 
-void PlayScene::SpawnFloor()
-{
-	// 現状障害物とほぼ変わらんけど、一応別途で
-	std::shuffle(seedTable.begin(), seedTable.end(), gen);
-	for (int x = 0; x < seedTable.size(); x++)
-	{
-		int objectType = 0; // まだ他の用意ができないから一旦0
-		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x]);
+		//連打で進んじゃうから応急処置,ちゃんとゲームぽく演出入れ
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		// カメラの演出、暫定ここ
+
+		KillMe();
 	}
 }
 
@@ -105,14 +101,16 @@ void PlayScene::SpawnObstacle()
 	for (int x = 0; x < seedTable.size() - 1; x++)
 	{
 		int objectType = RandomObjectType();
-		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x]);
+		GameObject* object = ObstacleFactory::CreateObstacle(objectType, this, seedTable[x], scrollSpe);
 	}
 }
 
 void PlayScene::SpawnItem()
 {
-	std::shuffle(seedTable.begin(), seedTable.end(), gen);
-
+	// 一旦壁が出なかった場所に出すだけ
+	// ジャンプ入れてるし、1個高い座標にも出るようにしてもいいかも
+	int objectType = RandomObjectType();
+	GameObject* object = ItemFactory::CreateItem(objectType, this, seedTable.back(), scrollSpe);
 }
 
 int PlayScene::RandomObjectType()

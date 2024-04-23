@@ -24,11 +24,11 @@
       <UniqueIdentifier>{47a6a3f5-8cfd-436b-8d58-beccd108f3f3}</UniqueIdentifier>
       <Extensions>hlsl</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル\Floor">
-      <UniqueIdentifier>{ab1d3c37-0c64-4ec2-8200-152ae899ab4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\Obstacle">
       <UniqueIdentifier>{88e5e40e-aa1f-42ff-9128-a045bc20c951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Item">
+      <UniqueIdentifier>{1d5f3f89-cebf-4fb2-9b5e-65e29b52bf8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,18 +106,16 @@
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="GameTimer.cpp" />
-    <ClCompile Include="Normal.cpp">
-      <Filter>リソース ファイル\Floor</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorFactory.cpp">
-      <Filter>リソース ファイル\Floor</Filter>
-    </ClCompile>
     <ClCompile Include="ObstacleFactory.cpp">
       <Filter>リソース ファイル\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>リソース ファイル\Obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="Feed.cpp">
+      <Filter>リソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -195,15 +193,6 @@
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameObjectObserver.h" />
-    <ClInclude Include="FloorTypes.h">
-      <Filter>リソース ファイル\Floor</Filter>
-    </ClInclude>
-    <ClInclude Include="Normal.h">
-      <Filter>リソース ファイル\Floor</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorFactory.h">
-      <Filter>リソース ファイル\Floor</Filter>
-    </ClInclude>
     <ClInclude Include="ObstacleFactory.h">
       <Filter>リソース ファイル\Obstacle</Filter>
     </ClInclude>
@@ -213,6 +202,13 @@
     <ClInclude Include="Wall.h">
       <Filter>リソース ファイル\Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="Feed.h">
+      <Filter>リソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemTypes.h">
+      <Filter>リソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

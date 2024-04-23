@@ -2,18 +2,20 @@
 
 #include "Engine/GameObject.h"
 
-class Normal : public GameObject
+class Feed : public GameObject
 {
 public:
-	Normal(GameObject* parent);
-	Normal(GameObject* parent, int xPos);
+	Feed(GameObject* parent);
+	Feed(GameObject* parent, int xPos, float scrollSpe);
+	~Feed();
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
 	void Release() override;
 
+	void OnCollision(GameObject* pTarget);
+
 private:
 	int hModel_;
-	float wScrollSpe_; //•Ç‚Ì”—‚Á‚Ä‚­‚é‘¬‚³
-
+	float scrollSpe_;
 };

@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Feed.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BillBoard.cpp" />
     <ClCompile Include="Engine\BoxCollider.cpp" />
@@ -148,8 +149,7 @@
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
-    <ClCompile Include="FloorFactory.cpp" />
-    <ClCompile Include="Normal.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ObstacleFactory.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResultScene.cpp" />
@@ -159,6 +159,7 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Feed.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BillBoard.h" />
     <ClInclude Include="Engine\BoxCollider.h" />
@@ -182,9 +183,8 @@
     <ClInclude Include="Engine\Text.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
-    <ClInclude Include="FloorFactory.h" />
     <ClInclude Include="GameObjectObserver.h" />
-    <ClInclude Include="Normal.h" />
+    <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="ObstacleFactory.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResultScene.h" />
@@ -193,7 +193,7 @@
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="ObstacleTypes.h" />
-    <ClInclude Include="FloorTypes.h" />
+    <ClInclude Include="ItemTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

@@ -20,7 +20,6 @@ public:
 	void OnCollision(GameObject* pSelf) override;
 
 private:
-	void SpawnFloor();
 	void SpawnObstacle();
 	void SpawnItem();
 	int RandomObjectType(); // もう少しマシな名前にしたい
@@ -32,6 +31,10 @@ private:
 
 	double lastSpawnTime;		// 
 	int spawnIntervalSeconds;	// スポーンの間隔
+	float scrollSpe;
+
+	// スコア用のカウントたち
+	int GetCoinCnt;
 
 	Text* pText;
 

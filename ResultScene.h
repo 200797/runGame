@@ -19,7 +19,9 @@ private:
 	int hPict_;
 	Text* pText;
 
+	// ƒXƒRƒA€–Ú
 	int time_;
+	float CoinCnt_;
 
 
 };

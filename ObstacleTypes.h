@@ -2,7 +2,6 @@
 
 enum class ObstacleTypes
 {
-    // b’èA–¼‘O‚Ív‚¢‚Â‚¢‚½‚ç•Ï‚¦‚é
     Wall = 0,
     Count
 };

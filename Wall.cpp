@@ -6,17 +6,17 @@ Wall::Wall(GameObject* parent)
 {
 }
 
-Wall::Wall(GameObject* parent, int xPos)
+Wall::Wall(GameObject* parent, int xPos, float scrollSpe)
 	: GameObject(parent, "Wall"), hModel_(-1)
 {
 	transform_.position_.x = xPos;
 
-	wScrollSpe_ = 0.1f;
+	scrollSpe_ = scrollSpe;
 }
 
 void Wall::Initialize()
 {
-	hModel_ = Model::Load("Wall.fbx");
+	hModel_ = Model::Load("Obstacle/Wall.fbx");
 	assert(hModel_ >= 0);
 
 	//èâä˙à íu
@@ -28,7 +28,7 @@ void Wall::Initialize()
 
 void Wall::Update()
 {
-	transform_.position_.z -= wScrollSpe_;
+	transform_.position_.z -= scrollSpe_;
 	if (transform_.position_.z < -5)
 	{
 		KillMe();

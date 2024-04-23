@@ -6,6 +6,7 @@ class Player : public GameObject
 {
 public:
 	Player(GameObject* parent);
+	~Player();
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
@@ -23,4 +24,8 @@ private:
 		FALLING
 	};
 	PlayerState state_;
+
+	int feedEatCnt;
+	int enemyEatCnt;
+	
 };

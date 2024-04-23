@@ -6,7 +6,7 @@ class Wall : public GameObject
 {
 public:
 	Wall(GameObject* parent);
-	Wall(GameObject* parent, int xPos);
+	Wall(GameObject* parent, int xPos, float scrollSpe);
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
@@ -14,7 +14,6 @@ public:
 
 private:
 	int hModel_;
-	float wScrollSpe_; //•Ç‚Ì”—‚Á‚Ä‚­‚é‘¬‚³
-
+	float scrollSpe_;
 
 };
