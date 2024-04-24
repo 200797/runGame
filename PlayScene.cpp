@@ -11,6 +11,7 @@
 #include "ObstacleTypes.h"
 
 GameTimer PlayScene::timer;
+Player PlayScene::pChar;
 
 /*
 * 4/19、最終系のイメージ全くないから適当に色々増設
@@ -26,8 +27,6 @@ PlayScene::PlayScene(GameObject* parent)
 	spawnIntervalSeconds = 1;
 	scrollSpe = 0.1f;
 
-	GetCoinCnt = 0;
-
 	//タイマー開始
 	timer.Start();
 }
@@ -40,7 +39,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	//カメラ、現状適当、完全固定じゃなくするならクラスに
+	//カメラ、現状適当
 	Camera::SetPosition(XMFLOAT3(0, 6, -12));
 	Camera::SetTarget(XMFLOAT3(0, 0, 4));
 
@@ -71,6 +70,14 @@ void PlayScene::Draw()
 	// PlaySceneにあんまこういうの書きたくないからどうにかしたい
 	pText->Draw(30, 30, "sec : ");
 	pText->Draw(120, 30, timer.GetCurrentElapsedTime());
+
+	pText->Draw(30, 130, "feed : ");
+	pText->Draw(120, 130, pChar.GetFeedEatCnt());
+
+	pText->Draw(30, 130, "eat : ");
+	pText->Draw(120, 130, pChar.GetGhostEatCnt());
+
+
 }
 
 void PlayScene::Release()
@@ -88,7 +95,6 @@ void PlayScene::OnCollision(GameObject* pSelf)
 
 		//連打で進んじゃうから応急処置,ちゃんとゲームぽく演出入れ
 		std::this_thread::sleep_for(std::chrono::seconds(1));
-		// カメラの演出、暫定ここ
 
 		KillMe();
 	}
@@ -107,7 +113,7 @@ void PlayScene::SpawnObstacle()
 
 void PlayScene::SpawnItem()
 {
-	// 一旦壁が出なかった場所に出すだけ
+	// 一旦は壁が出なかった場所に出すだけ
 	// ジャンプ入れてるし、1個高い座標にも出るようにしてもいいかも
 	int objectType = RandomObjectType();
 	GameObject* object = ItemFactory::CreateItem(objectType, this, seedTable.back(), scrollSpe);
@@ -118,7 +124,7 @@ int PlayScene::RandomObjectType()
 	int typeCount = static_cast<int>(ObstacleTypes::Count);
 	std::uniform_int_distribution<int> dist(0, typeCount - 1);
 	int type = dist(gen);
-	return 0;
+	return type;
 }
 
 

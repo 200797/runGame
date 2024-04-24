@@ -6,6 +6,7 @@
 #include "Engine/Text.h"
 
 class GameTimer;
+class Player;
 
 class PlayScene : public GameObject, public GameObjectObserver
 {
@@ -33,10 +34,8 @@ private:
 	int spawnIntervalSeconds;	// スポーンの間隔
 	float scrollSpe;
 
-	// スコア用のカウントたち
-	int GetCoinCnt;
-
 	Text* pText;
 
 	static GameTimer timer;
+	static Player pChar;
 };

@@ -5,6 +5,7 @@
 class Player : public GameObject
 {
 public:
+    Player();
     Player(GameObject* parent);
     ~Player();
     void Initialize() override;
@@ -14,20 +15,24 @@ public:
 
     void OnCollision(GameObject* pTarget);
 
+    int GetFeedEatCnt() { return feedEatCnt; };
+    int GetGhostEatCnt() { return ghostEatCnt; };
+
 private:
     int hModel_;
     // 仕様が決まってないから、名前は現在適当
     enum class PlayerState
     {
         NEUTRAL,
+        MOVING,
         JUMPING,
         FALLING
     };
     PlayerState state_;
 
-    XMFLOAT3 PrevPosition_;
+    float targetX_; // X座用しか動かく予定内からこれで
+    bool IsMoving_;
+   
     int feedEatCnt;
-    int enemyEatCnt;
-    float targetX_;
-    bool moving_; // 移動中かどうかを示すフラグ
+    int ghostEatCnt;
 };

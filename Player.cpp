@@ -5,8 +5,16 @@
 #include "PlayScene.h"
 
 
+Player::Player()
+{
+}
+
 Player::Player(GameObject* parent)
-    : GameObject(parent, "Player"), hModel_(-1), state_(PlayerState::NEUTRAL), feedEatCnt(0), enemyEatCnt(0)
+    : GameObject(parent, "Player"),
+    hModel_(-1),
+    state_(PlayerState::NEUTRAL),
+    IsMoving_(true),
+    feedEatCnt(0)
 {
     PlayScene* playScene = FindObject<PlayScene>("PlayScene");
     if (playScene)
@@ -33,40 +41,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-    PrevPosition_ = transform_.position_;
-
-    // 移動処理
-    if (moving_) {
-        // 目標座標に向かって滑らかに移動する
-        float direction = targetX_ - transform_.position_.x;
-        if (abs(direction) > 0.01f) {
-            direction /= abs(direction);
-            transform_.position_.x += direction * 0.05f; // 移動速度を適切な値に調整する必要があります
-        }
-        else {
-            transform_.position_.x = targetX_;
-            moving_ = false;
-        }
-    }
-    else {
-        // 中央に移動
-        if (Input::IsKeyDown(DIK_S)) {
-            targetX_ = 0.0f;
-            moving_ = true;
-        }
-        // 右移動でX座標が+1の位置まで移動開始
-        else if (Input::IsKeyDown(DIK_D) && transform_.position_.x < 1) {
-            targetX_ = 1.0f;
-            moving_ = true;
-        }
-        // 左移動でX座標が-1の位置まで移動開始
-        else if (Input::IsKeyDown(DIK_A) && transform_.position_.x > -1) {
-            targetX_ = -1.0f;
-            moving_ = true;
-        }
-    }
-
-    // 取り合えず簡素なY軸要素
     switch (state_)
     {
     case PlayerState::NEUTRAL:
@@ -74,8 +48,44 @@ void Player::Update()
         {
             state_ = PlayerState::JUMPING;
         }
+        if (Input::IsMouseButtonDown(0) || Input::IsMouseButtonDown(1))
+        {
+            state_ = PlayerState::MOVING;
+        }
         break;
+    case PlayerState::MOVING:
+   // 突貫で書いてるから汚い
+        if (IsMoving_)
+        {
+            float direction = targetX_ - transform_.position_.x;
+            if (abs(direction) > 0.01f)
+            {
+                direction /= abs(direction);
+                transform_.position_.x += direction * 0.05f;
+            }
+            else
+            {
+                transform_.position_.x = targetX_;
+                IsMoving_ = false;
+                state_ = PlayerState::NEUTRAL;
+            }
+        }
+        else
+        {
+            if (Input::IsMouseButtonUp(1) && transform_.position_.x < 1)
+            {
+                targetX_ = transform_.position_.x + 1.0f;
+                IsMoving_ = true;
+            }
+            else if (Input::IsMouseButtonUp(0) && transform_.position_.x > -1)
+            {
+                targetX_ = transform_.position_.x - 1.0f;
+                IsMoving_ = true;
+            }
+        }
 
+
+     // 取り合えず簡素なY軸要素
     case PlayerState::JUMPING:
         transform_.position_.y += 0.1f;
         if (transform_.position_.y >= 2.0f)
@@ -109,17 +119,28 @@ void Player::Release()
 void Player::OnCollision(GameObject* pTarget)
 {
     // ゲームオーバー系の種類増えるたびここに条件増えるのアホくさい
+    // if in ifなの嫌だからちょっと考え直した方がいいかも
     if (pTarget->GetObjectName() == "Wall")
     {
         // 演出入れるならここかなぁ
-        KillMe();
-        pTarget->KillMe();
-        NotifyCollision(this);
+        if (feedEatCnt >= 4)
+        {
+            pTarget->KillMe();
+            feedEatCnt -= 4;
+            ghostEatCnt++;
+            return;
+        }
+        else 
+        {
+            KillMe();
+            pTarget->KillMe();
+            NotifyCollision(this);
+            return;
+        }
+        
     }
-
     if (pTarget->GetObjectName() == "Feed")
     {
-        pTarget->KillMe();
         feedEatCnt++;
     }
 }

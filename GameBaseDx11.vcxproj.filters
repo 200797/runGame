@@ -116,6 +116,7 @@
       <Filter>リソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="Shaker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -209,6 +210,7 @@
       <Filter>リソース ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="Shaker.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
