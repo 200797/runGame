@@ -11,11 +11,14 @@ public:
 	~Shaker();
 	void Update() override;
 
-	void ShekePos(float duration, float strength, float vibrato, float totalTime);
+	void RandShake(float duration, float strength, float vibrato, float totalTime);
+	void PerlinNoiseShake(float duration, float strength, float vibrato, float totalTime, XMFLOAT3 _initPos);
+private:
+	float GetPerlinNoiseValue(float _offSet, float _speed, float _time);
 
 private:
 	// ‘‚«•û–Y‚ê‚½‚©‚çˆê’UAŒã‚Å\‘¢‘Ì‚É’¼‚µ‚Ä
-		float shakeDuration_;	//—h‚ç‚µ‚½‚¢ŠÔ
+		float duration_;	//—h‚ç‚µ‚½‚¢ŠÔ
 		float strength_;			//—h‚ê‚Ì‹­‚³
 		float vibrato_;			//—h‚ê‚Ì”ÍˆÍ
 
@@ -27,9 +30,9 @@ private:
 			float vibrato;
 		};
 
-	XMFLOAT3 backUpPos_;	 // —h‚ç‚·‘O‚ÌƒJƒƒ‰ˆÊ’u
-	bool IsSheking_;		//—h‚ê‚Ä‚¢‚é‚©ƒtƒ‰ƒO
-	float totalShakeTime_;	//—h‚ê‚ÌŒo‰ßŠÔ
+	XMFLOAT3 initPos_;	 // —h‚ç‚·‘O‚ÌƒJƒƒ‰ˆÊ’u
+	bool IsShaking_;		//—h‚ê‚Ä‚¢‚é‚©ƒtƒ‰ƒO
+	float totalTime_;	//—h‚ê‚ÌŒo‰ßŠÔ
 
 	std::mt19937 gen;
 
