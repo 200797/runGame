@@ -12,6 +12,8 @@ namespace Camera
 	//更新（ビュー行列作成）
 	void Update();
 
+	void UpdateShake();
+
 	//視点（カメラの位置）を設定
 	void SetPosition(XMFLOAT3 position);
 
@@ -32,4 +34,8 @@ namespace Camera
 
 	//ビルボード用回転行列を取得
 	XMMATRIX GetBillboardMatrix();
+
+	void Shake(float duration, float strength, float vibrato);
+
+	float RandomFloat(float min, float max);
 };

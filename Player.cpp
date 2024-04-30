@@ -3,6 +3,7 @@
 #include "Engine/Input.h"
 #include "Engine/SceneManager.h"
 #include "PlayScene.h"
+#include "Engine/Camera.h"
 
 
 Player::Player()
@@ -53,18 +54,25 @@ void Player::Update()
             state_ = PlayerState::MOVING;
         }
         break;
+
     case PlayerState::MOVING:
-   // 突貫で書いてるから汚い
         if (IsMoving_)
         {
-            float direction = targetX_ - transform_.position_.x;
-            if (abs(direction) > 0.01f)
+            // 目的地までの距離を計算
+            float distanceToTarget = targetX_ - transform_.position_.x;
+
+            // 移動速度を一定に
+            float moveSpeed = 0.05f;
+
+            // 目的地に近づけるようにプレイヤーを移動
+            if (abs(distanceToTarget) > moveSpeed)
             {
-                direction /= abs(direction);
-                transform_.position_.x += direction * 0.05f;
+                float direction = distanceToTarget / abs(distanceToTarget);
+                transform_.position_.x += direction * moveSpeed;
             }
             else
             {
+                // 到達したら位置を正確に設定し状態を変更
                 transform_.position_.x = targetX_;
                 IsMoving_ = false;
                 state_ = PlayerState::NEUTRAL;
@@ -83,10 +91,13 @@ void Player::Update()
                 IsMoving_ = true;
             }
         }
+        break;
 
-
-     // 取り合えず簡素なY軸要素
     case PlayerState::JUMPING:
+
+        //ここでカメラを揺らしたい 
+        Camera::Shake(1.0f, 0.5f, 0.1f);
+
         transform_.position_.y += 0.1f;
         if (transform_.position_.y >= 2.0f)
         {
@@ -106,6 +117,9 @@ void Player::Update()
 }
 
 
+
+
+
 void Player::Draw()
 {
     Model::SetTransform(hModel_, transform_);
@@ -122,25 +136,9 @@ void Player::OnCollision(GameObject* pTarget)
     // if in ifなの嫌だからちょっと考え直した方がいいかも
     if (pTarget->GetObjectName() == "Wall")
     {
-        // 演出入れるならここかなぁ
-        if (feedEatCnt >= 4)
-        {
-            pTarget->KillMe();
-            feedEatCnt -= 4;
-            ghostEatCnt++;
-            return;
-        }
-        else 
-        {
-            KillMe();
-            pTarget->KillMe();
-            NotifyCollision(this);
-            return;
-        }
-        
-    }
-    if (pTarget->GetObjectName() == "Feed")
-    {
-        feedEatCnt++;
+       // KillMe();
+        pTarget->KillMe();
+       // NotifyCollision(this);
+        return;
     }
 }

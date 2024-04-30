@@ -157,7 +157,6 @@
     <ClCompile Include="ObstacleFactory.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResultScene.cpp" />
-    <ClCompile Include="Shaker.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -193,7 +192,6 @@
     <ClInclude Include="ObstacleFactory.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResultScene.h" />
-    <ClInclude Include="Shaker.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="GameTimer.h" />

@@ -39,9 +39,6 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	//ƒJƒƒ‰AŒ»ó“K“–
-	Camera::SetPosition(XMFLOAT3(0, 6, -12));
-	Camera::SetTarget(XMFLOAT3(0, 0, 4));
 
 	Instantiate<Player>(this);
 
@@ -71,8 +68,8 @@ void PlayScene::Draw()
 	pText->Draw(30, 30, "sec : ");
 	pText->Draw(120, 30, timer.GetCurrentElapsedTime());
 
-	pText->Draw(30, 130, "feed : ");
-	pText->Draw(120, 130, pChar.GetFeedEatCnt());
+	pText->Draw(30, 80, "feed: ");
+	pText->Draw(120, 80, pChar.GetFeedEatCnt());
 
 	pText->Draw(30, 130, "eat : ");
 	pText->Draw(120, 130, pChar.GetGhostEatCnt());
