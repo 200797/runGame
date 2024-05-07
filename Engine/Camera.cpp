@@ -1,6 +1,8 @@
 #include "camera.h"
 #include "Direct3D.h"
 
+using namespace Direct3D;
+
 XMFLOAT3 _position;
 XMFLOAT3 _target;
 XMMATRIX _view;
@@ -25,7 +27,7 @@ void Camera::Initialize()
     _target = XMFLOAT3(0, 0, 0);     // カメラの焦点
 
     // プロジェクション行列
-    _proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)Direct3D::screenWidth_ / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
+    _proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)screenWidth_ / (FLOAT)screenHeight_, 0.1f, 1000.0f);
 
     // 揺れ情報初期化
     _shakeInfo.Duration = 0.0f;
@@ -50,7 +52,7 @@ void Camera::UpdateShake()
 {
     if (_shakeInfo.Duration > 0.0f && _shakeInfo.StartTime > 0.0f)
     {
-        float currentTime = GetCurrentTime(); // 現在の時間を取得する方法に応じて実装
+        float currentTime = GetCurrentTime();
         float elapsedTime = currentTime - _shakeInfo.StartTime;
 
         if (elapsedTime <= _shakeInfo.Duration)
@@ -103,7 +105,7 @@ void Camera::Shake(float duration, float strength, float vibrato)
     _shakeInfo.Duration = duration;
     _shakeInfo.Strength = strength;
     _shakeInfo.Vibrato = vibrato;
-    _shakeInfo.StartTime = GetCurrentTime();// 現在の時間を取得する方法に応じて実装
+    _shakeInfo.StartTime = GetCurrentTime();
 }
 
 // 指定範囲内のランダムな浮動小数点数を取得するヘルパー関数

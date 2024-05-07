@@ -159,7 +159,7 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +194,7 @@
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="ObstacleTypes.h" />
     <ClInclude Include="ItemTypes.h" />

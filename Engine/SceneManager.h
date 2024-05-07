@@ -30,14 +30,8 @@ public:
 	//引数：next	次のシーンのID
 	void ChangeScene(SCENE_ID next);
 
-	//シーン切り替え（RESULT用）
-	//引数：next	次のシーンのID, 生存時間
-	void ChangeScene(SCENE_ID next, int score);
-
 private:
 	SCENE_ID currentSceneID_;	//現在のシーン
 	SCENE_ID nextSceneID_;		//次のシーン
-private:
-	int playerScore_;
 
 };

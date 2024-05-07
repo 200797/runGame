@@ -36,6 +36,5 @@ private:
 
 	Text* pText;
 
-	static GameTimer timer;
 	static Player pChar;
 };

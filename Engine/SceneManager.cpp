@@ -42,7 +42,7 @@ void SceneManager::Update()
 		{
 		case SCENE_ID_START: Instantiate<StartScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
-		case SCENE_ID_RESULT: Instantiate<ResultScene>(this, playerScore_); break;
+		case SCENE_ID_RESULT: Instantiate<ResultScene>(this); break;
 
 		}
 		Audio::Initialize();
@@ -64,10 +64,4 @@ void SceneManager::Release()
 void SceneManager::ChangeScene(SCENE_ID next)
 {
 	nextSceneID_ = next;
-}
-
-void SceneManager::ChangeScene(SCENE_ID next, int score)
-{
-	nextSceneID_ = next;
-	playerScore_ = score;
 }

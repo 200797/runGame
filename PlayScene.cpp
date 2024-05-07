@@ -4,13 +4,12 @@
 #include "Engine/SceneManager.h"
 #include "Player.h"
 #include "Wall.h"
-#include "GameTimer.h"
 #include "ObstacleFactory.h"
 #include "ItemFactory.h"
 #include <thread>
 #include "ObstacleTypes.h"
+#include "Time.h"
 
-GameTimer PlayScene::timer;
 Player PlayScene::pChar;
 
 /*
@@ -28,13 +27,13 @@ PlayScene::PlayScene(GameObject* parent)
 	scrollSpe = 0.1f;
 
 	//タイマー開始
-	timer.Start();
+	Time::Start();
 }
 
 PlayScene::~PlayScene()
 {
 	SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-	pSceneManager->ChangeScene(SCENE_ID_RESULT, timer.GetElapsedTime());
+	pSceneManager->ChangeScene(SCENE_ID_RESULT);
 }
 
 void PlayScene::Initialize()
@@ -48,10 +47,13 @@ void PlayScene::Initialize()
 
 void PlayScene::Update()
 {
+	//お試し揺れ
+	//Camera::Shake(1.0f, 0.5f, 0.1f);
+
 	// ウィンドウの更新が停止してても時間進むから要改善
 	// メインループに触らないといけなそうだから見なかったことにする
 
-	double currentTime = timer.GetCurrentElapsedTime();
+	double currentTime = Time::ElapsedTime();
 	
 	// 設定間隔の時間がしたかをチェック
 	if (currentTime - lastSpawnTime >= spawnIntervalSeconds)
@@ -66,7 +68,7 @@ void PlayScene::Draw()
 {
 	// PlaySceneにあんまこういうの書きたくないからどうにかしたい
 	pText->Draw(30, 30, "sec : ");
-	pText->Draw(120, 30, timer.GetCurrentElapsedTime());
+	pText->Draw(120, 30, Time::ElapsedTime());
 
 	pText->Draw(30, 80, "feed: ");
 	pText->Draw(120, 80, pChar.GetFeedEatCnt());
@@ -88,7 +90,7 @@ void PlayScene::OnCollision(GameObject* pSelf)
 	if (pSelf->GetObjectName() == "Player")
 	{
 		//タイマー終了
-		timer.Stop();
+		Time::End();
 
 		//連打で進んじゃうから応急処置,ちゃんとゲームぽく演出入れ
 		std::this_thread::sleep_for(std::chrono::seconds(1));

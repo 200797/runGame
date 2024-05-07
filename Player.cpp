@@ -94,10 +94,6 @@ void Player::Update()
         break;
 
     case PlayerState::JUMPING:
-
-        //‚±‚±‚ÅƒJƒƒ‰‚ð—h‚ç‚µ‚½‚¢ 
-        Camera::Shake(1.0f, 0.5f, 0.1f);
-
         transform_.position_.y += 0.1f;
         if (transform_.position_.y >= 2.0f)
         {
@@ -136,9 +132,10 @@ void Player::OnCollision(GameObject* pTarget)
     // if in if‚È‚ÌŒ™‚¾‚©‚ç‚¿‚å‚Á‚Æl‚¦’¼‚µ‚½•û‚ª‚¢‚¢‚©‚à
     if (pTarget->GetObjectName() == "Wall")
     {
-       // KillMe();
+
+        KillMe();
         pTarget->KillMe();
-       // NotifyCollision(this);
+        NotifyCollision(this);
         return;
     }
 }
