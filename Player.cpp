@@ -138,4 +138,9 @@ void Player::OnCollision(GameObject* pTarget)
         NotifyCollision(this);
         return;
     }
+    if (pTarget->GetObjectName() == "Feed")
+    {
+        pTarget->KillMe();
+        feedEatCnt++;
+    }
 }

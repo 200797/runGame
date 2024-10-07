@@ -5,7 +5,6 @@
 #include "Engine/GameObject.h"
 #include "Engine/Text.h"
 
-class GameTimer;
 class Player;
 
 class PlayScene : public GameObject, public GameObjectObserver
@@ -36,5 +35,5 @@ private:
 
 	Text* pText;
 
-	static Player pChar;
+	Player* player;
 };

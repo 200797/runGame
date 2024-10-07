@@ -10,8 +10,6 @@
 #include "ObstacleTypes.h"
 #include "Time.h"
 
-Player PlayScene::pChar;
-
 /*
 * 4/19、最終系のイメージ全くないから適当に色々増設
 * もじもじくんはもはやランゲームじゃないのでなし
@@ -23,7 +21,7 @@ PlayScene::PlayScene(GameObject* parent)
 	: GameObject(parent, "PlayScene"), pText(nullptr), gen(std::random_device()())
 {
 	lastSpawnTime = 0;
-	spawnIntervalSeconds = 1;
+	spawnIntervalSeconds = 2.0;
 	scrollSpe = 0.1f;
 
 	//タイマー開始
@@ -39,7 +37,7 @@ PlayScene::~PlayScene()
 void PlayScene::Initialize()
 {
 
-	Instantiate<Player>(this);
+	player = Instantiate<Player>(this);
 
 	pText = new Text;
 	pText->Initialize();
@@ -47,34 +45,33 @@ void PlayScene::Initialize()
 
 void PlayScene::Update()
 {
-	//お試し揺れ
-	//Camera::Shake(1.0f, 0.5f, 0.1f);
+	//既存のTimerが不出来だったから取り合えず無理やり、
 
-	// ウィンドウの更新が停止してても時間進むから要改善
-	// メインループに触らないといけなそうだから見なかったことにする
+	static auto lastSpawnTime = std::chrono::steady_clock::now();
+	auto currentTime = std::chrono::steady_clock::now();
 
-	double currentTime = Time::ElapsedTime();
-	
-	// 設定間隔の時間がしたかをチェック
-	if (currentTime - lastSpawnTime >= spawnIntervalSeconds)
+	std::chrono::duration<float> elapsedTime = currentTime - lastSpawnTime;
+
+	if (elapsedTime.count() >= spawnIntervalSeconds)
 	{
 		SpawnObstacle();
 		SpawnItem();
-		lastSpawnTime = currentTime;  //最終スポーン時間を更新
+		lastSpawnTime = currentTime;
 	}
 }
 
 void PlayScene::Draw()
 {
 	// PlaySceneにあんまこういうの書きたくないからどうにかしたい
-	pText->Draw(30, 30, "sec : ");
-	pText->Draw(120, 30, Time::ElapsedTime());
+	//pText->Draw(30, 30, "sec : ");
+	//pText->Draw(120, 30, Time::ElapsedTime());
+	
 
 	pText->Draw(30, 80, "feed: ");
-	pText->Draw(120, 80, pChar.GetFeedEatCnt());
+	pText->Draw(120, 80, player->GetFeedEatCnt());
 
-	pText->Draw(30, 130, "eat : ");
-	pText->Draw(120, 130, pChar.GetGhostEatCnt());
+	//pText->Draw(30, 130, "eat : ");
+	//pText->Draw(120, 130, pChar.GetGhostEatCnt());
 
 
 }

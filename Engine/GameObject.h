@@ -89,6 +89,66 @@ public:
 	//戻値：見つけたオブジェクトのアドレス（見つからなければnullptr）
 	GameObject* FindChildObject(const std::string& name);
 
+	/// <summary>
+	/// クラス名で検索できるもの
+	/// </summary>
+	template<class C>
+	C* FindGameObject() {
+		auto list = GetChildList();
+		for (GameObject* obj : *list) {
+			C* ret = dynamic_cast<C*>(obj);
+			if (ret != nullptr) {
+				return ret;
+			}
+		}
+		return nullptr;
+	}
+
+	template<class C>
+	std::list<C*> FindGameObjects() {
+		std::list<C*> rets;
+		auto list = GetChildList();
+		for (GameObject* obj : *list) {
+			C* ret = dynamic_cast<C*>(obj);
+			if (ret != nullptr) {
+				rets.push_back(ret);
+			}
+		}
+		return rets;
+	}
+
+	/// <summary>
+	/// クラス名で検索できるもの
+	/// </summary>
+	template<class C>
+	C* FindGameObject(const std::string& tag) {
+		auto list = GetChildList();
+		for (GameObject* obj : *list) {
+			C* ret = dynamic_cast<C*>(obj);
+			if (ret != nullptr) {
+				if (obj->GetObjectName() == tag) {
+					return ret;
+				}
+			}
+		}
+		return nullptr;
+	}
+
+	template<class C>
+	std::list<C*> FindGameObjects(const std::string& tag) {
+		std::list<C*> rets;
+		auto list = GetChildList();
+		for (GameObject* obj : *list) {
+			C* ret = dynamic_cast<C*>(obj);
+			if (ret != nullptr) {
+				if (obj->GetObjectName() == tag) {
+					rets.push_back(ret);
+				}
+			}
+		}
+		return rets;
+	}
+
 	//名前でオブジェクトを検索（対象は全体）(戻り値GameObject*)
 	//引数：検索する名前
 	//戻値：見つけたオブジェクトのアドレス

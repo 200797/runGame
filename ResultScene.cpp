@@ -35,8 +35,8 @@ void ResultScene::Draw()
 	Image::SetTransform(hPict_, transform_);
 	Image::Draw(hPict_);
 	// タイム
-	pText->Draw(550, 250, "Time  :      SEC");
-	pText->Draw(700, 250, time_);
+	//pText->Draw(550, 250, "Time  :      SEC");
+	//pText->Draw(700, 250, time_);
 	// コイン
 	//pText->Draw(550, 350, "Time  :      SEC");
 	//pText->Draw(700, 350, CoinCnt_);
